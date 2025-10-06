@@ -1,12 +1,34 @@
 package ua.opnu;
 
 public class BankAccount {
-    String name;
-    double balance;
-    double transactionFee = 0.0; // початкове значення комісії
+    private String name;
+    private double balance;
+    private double transactionFee = 0.0; // початкове значення комісії
+
+    // Конструктор
+    public BankAccount(String name, double balance) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("Баланс не може бути від’ємним");
+        }
+        this.name = name;
+        this.balance = balance;
+    }
+
+    // Встановити комісію
+    public void setTransactionFee(double fee) {
+        if (fee < 0) {
+            throw new IllegalArgumentException("Комісія не може бути від’ємною");
+        }
+        this.transactionFee = fee;
+    }
+
+    // Отримати комісію
+    public double getTransactionFee() {
+        return transactionFee;
+    }
 
     // Поповнення рахунку
-    void deposit(double amount) {
+    public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Сума поповнення повинна бути більше 0");
         }
@@ -14,19 +36,19 @@ public class BankAccount {
     }
 
     // Отримання поточного балансу
-    double getBalance() {
-        return this.balance;
+    public double getBalance() {
+        return balance;
     }
 
     // Зняття коштів (із врахуванням комісії)
-    boolean withdraw(double amount) {
+    public boolean withdraw(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Сума зняття повинна бути більше 0");
         }
 
         double total = amount + transactionFee;
         if (total > balance) {
-            return false; // недостатньо коштів
+            return false; // недостатньо коштів, баланс не змінюємо
         }
 
         balance -= total;
@@ -34,7 +56,7 @@ public class BankAccount {
     }
 
     // Переказ коштів іншому рахунку
-    boolean transfer(BankAccount receiver, double amount) {
+    public boolean transfer(BankAccount receiver, double amount) {
         if (receiver == null) {
             throw new IllegalArgumentException("Отримувач не може бути null");
         }
@@ -47,11 +69,14 @@ public class BankAccount {
             return false; // недостатньо коштів
         }
 
-        // списуємо з поточного рахунку суму + комісію
-        balance -= total;
-        // зараховуємо суму без комісії на рахунок отримувача
-        receiver.balance += amount;
+        balance -= total;      // списуємо з поточного рахунку суму + комісію
+        receiver.balance += amount; // зараховуємо суму на рахунок отримувача без комісії
 
         return true;
+    }
+
+    // Отримати ім'я власника рахунку
+    public String getName() {
+        return name;
     }
 }
