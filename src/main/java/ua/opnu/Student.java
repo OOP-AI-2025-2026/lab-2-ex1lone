@@ -12,66 +12,62 @@ public class Student {
     // Конструктор
     public Student(String name, int year) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Ім'я студента не може бути порожнім");
+            throw new IllegalArgumentException("Ім'я студента не може бути пустим");
         }
         if (year < 1 || year > 4) {
-            throw new IllegalArgumentException("Рік навчання має бути від 1 до 4");
+            throw new IllegalArgumentException("Рік навчання повинен бути від 1 до 4");
         }
         this.name = name;
         this.year = year;
         this.courses = new ArrayList<>();
     }
 
-    // Додавання дисципліни
+    // Додати дисципліну
     public void addCourse(String courseName) {
         if (courseName == null || courseName.isEmpty()) {
-            throw new IllegalArgumentException("Назва дисципліни не може бути порожньою");
+            throw new IllegalArgumentException("Назва дисципліни не може бути пустою");
         }
         courses.add(courseName);
     }
 
-    // Видалення всіх дисциплін
+    // Видалити всі дисципліни
     public void dropAll() {
         courses.clear();
     }
 
-    // Кількість дисциплін
+    // Повернути кількість дисциплін
     public int getCourseCount() {
         return courses.size();
     }
 
-    // Ім'я студента
+    // Повернути ім'я студента
     public String getName() {
         return name;
     }
 
-    // Рік навчання
+    // Повернути суму сплачену за навчання
+    public int getTuition() {
+        return year * TUITION_PER_YEAR;
+    }
+
+    // Повернути рік навчання
     public int getYear() {
         return year;
     }
 
-    // Сума грошей за навчання
-    public int getTuition() {
-        return TUITION_PER_YEAR * year;
-    }
-
-    // Головний метод для демонстрації
+    // Метод main для демонстрації
     public static void main(String[] args) {
-        // Створюємо студента
+        // Створення студента
         Student student = new Student("Іван", 2);
 
-        // Додаємо дисципліни
+        // Додавання дисциплін
         student.addCourse("Математика");
-        student.addCourse("Програмування");
         student.addCourse("Фізика");
+        student.addCourse("Програмування");
 
-        // Виводимо кількість дисциплін
+        // Виведення інформації
         System.out.println(student.getName() + ": кількість вивчаємих дисциплін - " + student.getCourseCount());
-
-        // Виводимо рік навчання
         System.out.println(student.getName() + ": рік навчання - " + student.getYear());
-
-        // Виводимо суму грошей, сплачену за навчання
         System.out.println(student.getName() + ": заплатив за навчання - " + student.getTuition());
     }
 }
