@@ -3,71 +3,57 @@ package ua.opnu;
 import java.util.ArrayList;
 
 public class Student {
-    private String name;
-    private int year; // від 1 до 4
-    private ArrayList<String> courses;
 
-    private static final int TUITION_PER_YEAR = 20000;
+  public static void main(String[] args) {
 
-    // Конструктор
-    public Student(String name, int year) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Ім'я студента не може бути пустим");
-        }
-        if (year < 1 || year > 4) {
-            throw new IllegalArgumentException("Рік навчання повинен бути від 1 до 4");
-        }
-        this.name = name;
-        this.year = year;
-        this.courses = new ArrayList<>();
+    ua.opnu.Student mark = new ua.opnu.Student("mark", 2);
+
+    mark.addCourse("math");
+    mark.addCourse("chemistry");
+    mark.addCourse("physics");
+
+    System.out.println(
+        mark.getName() + ": кількість вивчаємих дисциплін - " + mark.getCourseCount());
+
+    System.out.println(mark.getName() + ": рік навчання - " + mark.getYear());
+
+    System.out.println(mark.getName() + ": заплатив за навчання - " + mark.getTuition());
+  }
+
+  int year;
+  String name;
+  ArrayList<String> courses = new ArrayList<>();
+
+  Student(String name, int year) {
+    if (year < 0) {
+      return;
     }
 
-    // Додати дисципліну
-    public void addCourse(String courseName) {
-        if (courseName == null || courseName.isEmpty()) {
-            throw new IllegalArgumentException("Назва дисципліни не може бути пустою");
-        }
-        courses.add(courseName);
-    }
+    this.name = name;
+    this.year = year;
+  }
 
-    // Видалити всі дисципліни
-    public void dropAll() {
-        courses.clear();
-    }
+  String getName() {
+    return this.name;
+  }
 
-    // Повернути кількість дисциплін
-    public int getCourseCount() {
-        return courses.size();
-    }
+  int getYear() {
+    return this.year;
+  }
 
-    // Повернути ім'я студента
-    public String getName() {
-        return name;
-    }
+  int getTuition() {
+    return this.year * 20000;
+  }
 
-    // Повернути суму сплачену за навчання
-    public int getTuition() {
-        return year * TUITION_PER_YEAR;
-    }
+  void addCourse(String courseName) {
+    courses.add(courseName);
+  }
 
-    // Повернути рік навчання
-    public int getYear() {
-        return year;
-    }
+  void dropAll() {
+    courses.clear();
+  }
 
-    // Метод main для демонстрації
-    public static void main(String[] args) {
-        // Створення студента
-        Student student = new Student("Іван", 2);
-
-        // Додавання дисциплін
-        student.addCourse("Математика");
-        student.addCourse("Фізика");
-        student.addCourse("Програмування");
-
-        // Виведення інформації
-        System.out.println(student.getName() + ": кількість вивчаємих дисциплін - " + student.getCourseCount());
-        System.out.println(student.getName() + ": рік навчання - " + student.getYear());
-        System.out.println(student.getName() + ": заплатив за навчання - " + student.getTuition());
-    }
+  int getCourseCount() {
+    return courses.size();
+  }
 }
