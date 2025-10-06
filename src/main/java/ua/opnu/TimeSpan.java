@@ -2,79 +2,106 @@ package ua.opnu;
 
 public class TimeSpan {
 
-    private int hours;
-    private int minutes;
+  // TODO: add class fields
 
-    // Конструктор
-    public TimeSpan(int hours, int minutes) {
-        if (hours < 0 || minutes < 0 || minutes > 59) {
-            throw new IllegalArgumentException("Некоректні години або хвилини");
-        }
-        this.hours = hours;
-        this.minutes = minutes;
+  int hours, minutes;
+
+  TimeSpan(int hours, int minutes) {
+
+    if (hours < 0 || minutes < 0 || minutes > 59) {
+      return;
     }
 
-    // Повертає кількість годин
-    public int getHours() {
-        return hours;
+    this.hours = hours;
+    this.minutes = minutes;
+  }
+
+  int getHours() {
+    return hours;
+  }
+
+  int getMinutes() {
+    // TODO: write method body
+    return minutes;
+  }
+
+  void add(int hours, int minutes) {
+
+    if (hours < 0 || minutes < 0 || minutes > 59) {
+      return;
     }
 
-    // Повертає кількість хвилин
-    public int getMinutes() {
-        return minutes;
+    this.minutes += minutes;
+
+    if (this.minutes > 59) {
+
+      this.hours += (hours + this.minutes / 60);
+      this.minutes = this.minutes - 60;
+
+      return;
     }
 
-    // Додавання годин і хвилин до інтервалу
-    public void add(int hours, int minutes) {
-        if (hours < 0 || minutes < 0 || minutes > 59) {
-            throw new IllegalArgumentException("Некоректні години або хвилини");
-        }
+    this.hours += hours;
+    // TODO: write method body
+  }
 
-        int totalMinutes = this.minutes + minutes;
-        int totalHours = this.hours + hours + totalMinutes / 60;
-        totalMinutes %= 60;
+  void addTimeSpan(TimeSpan timespan) {
 
-        this.hours = totalHours;
-        this.minutes = totalMinutes;
+    this.minutes += timespan.getMinutes();
+
+    if (this.minutes > 59) {
+
+      this.hours += (timespan.getHours() + this.minutes / 60);
+      this.minutes = this.minutes - 60;
+
+      return;
     }
 
-    // Додавання іншого TimeSpan
-    public void addTimeSpan(TimeSpan timespan) {
-        add(timespan.getHours(), timespan.getMinutes());
+    this.hours += timespan.getHours();
+
+    // TODO: write method body
+  }
+
+  double getTotalHours() {
+
+    double min = this.minutes;
+
+    // TODO: write method body
+    return this.hours + (((min * 100) / 60)) / 100;
+  }
+
+  int getTotalMinutes() {
+
+    return this.minutes + (this.hours * 60);
+  }
+
+  void subtract(TimeSpan span) {
+
+    int a = this.hours * 60 + this.minutes;
+    int b = span.hours * 60 + span.minutes;
+
+    if (a < b) {
+      return;
     }
 
-    // Загальна кількість годин (у вигляді дробового числа)
-    public double getTotalHours() {
-        return hours + minutes / 60.0;
+    this.hours = (a - b) / 60;
+    this.minutes = (a - b) % 60;
+
+    // TODO: write method body
+  }
+
+  void scale(int factor) {
+
+    if (factor <= 0) {
+      return;
     }
+    int a = this.hours * 60 + this.minutes;
 
-    // Загальна кількість хвилин
-    public int getTotalMinutes() {
-        return hours * 60 + minutes;
-    }
+    int b = a * factor;
 
-    // Віднімання іншого інтервалу
-    public void subtract(TimeSpan span) {
-        int totalThis = getTotalMinutes();
-        int totalOther = span.getTotalMinutes();
+    this.hours = (b) / 60;
+    this.minutes = (b) % 60;
 
-        if (totalOther > totalThis) {
-            throw new IllegalArgumentException("Неможливо відняти більший інтервал від меншого");
-        }
-
-        int result = totalThis - totalOther;
-        this.hours = result / 60;
-        this.minutes = result % 60;
-    }
-
-    // Масштабування інтервалу
-    public void scale(int factor) {
-        if (factor <= 0) {
-            throw new IllegalArgumentException("Множник має бути більше 0");
-        }
-
-        int totalMinutes = getTotalMinutes() * factor;
-        this.hours = totalMinutes / 60;
-        this.minutes = totalMinutes % 60;
-    }
+    // TODO: write method body
+  }
 }
