@@ -6,7 +6,7 @@ public class TimeSpan {
     private int minutes;
 
     // Конструктор
-    TimeSpan(int hours, int minutes) {
+    public TimeSpan(int hours, int minutes) {
         if (hours < 0 || minutes < 0 || minutes > 59) {
             throw new IllegalArgumentException("Некоректні години або хвилини");
         }
@@ -15,17 +15,17 @@ public class TimeSpan {
     }
 
     // Повертає кількість годин
-    int getHours() {
+    public int getHours() {
         return hours;
     }
 
     // Повертає кількість хвилин
-    int getMinutes() {
+    public int getMinutes() {
         return minutes;
     }
 
     // Додавання годин і хвилин до інтервалу
-    void add(int hours, int minutes) {
+    public void add(int hours, int minutes) {
         if (hours < 0 || minutes < 0 || minutes > 59) {
             throw new IllegalArgumentException("Некоректні години або хвилини");
         }
@@ -39,22 +39,22 @@ public class TimeSpan {
     }
 
     // Додавання іншого TimeSpan
-    void addTimeSpan(TimeSpan timespan) {
+    public void addTimeSpan(TimeSpan timespan) {
         add(timespan.getHours(), timespan.getMinutes());
     }
 
     // Загальна кількість годин (у вигляді дробового числа)
-    double getTotalHours() {
+    public double getTotalHours() {
         return hours + minutes / 60.0;
     }
 
     // Загальна кількість хвилин
-    int getTotalMinutes() {
+    public int getTotalMinutes() {
         return hours * 60 + minutes;
     }
 
     // Віднімання іншого інтервалу
-    void subtract(TimeSpan span) {
+    public void subtract(TimeSpan span) {
         int totalThis = getTotalMinutes();
         int totalOther = span.getTotalMinutes();
 
@@ -68,7 +68,7 @@ public class TimeSpan {
     }
 
     // Масштабування інтервалу
-    void scale(int factor) {
+    public void scale(int factor) {
         if (factor <= 0) {
             throw new IllegalArgumentException("Множник має бути більше 0");
         }
